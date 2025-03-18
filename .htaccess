@@ -1,0 +1,18 @@
+# Activer la réécriture d'URL
+RewriteEngine On
+# Définir le dossier contenant l'index comme racine
+RewriteBase /
+# Rediriger toutes les requêtes vers index.php dans le dossier pages/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ pages/index.php?$1 [L,QSA]
+# Autoriser l'accès aux fichiers et répertoires existants
+<FilesMatch "\.(htaccess|htpasswd)">
+   Order Allow,Deny
+   Deny from all
+</FilesMatch>
+# Forcer www et HTTPS (optionnel, active seulement si besoin)
+# RewriteCond %{HTTPS} off
+# RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# Gérer les erreurs (optionnel)
+ErrorDocument 404 /pages/index.php
